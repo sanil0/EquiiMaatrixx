@@ -1,0 +1,57 @@
+# Build results
+bin/
+obj/
+*.dll
+*.exe
+*.pdb
+
+# .NET Core
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Visual Studio cache/options directory
+.vs/
+
+# Visual Studio Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/*
+
+# User-specific files
+*.user
+*.userosscache
+*.sln.user
+*.suo
+*.ncb
+*.opensdf
+*.sdf
+*.cachefile
+
+# Development specific
+appsettings.Development.json
+market_price_cache.json
+market_price_log.json
+
+# IDEs and editors
+.idea/
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# Miscellaneous
+node_modules/
+npm-debug.log
+yarn-error.log
+.env
+.env.local
+
+# System files
+.DS_Store
+Thumbs.db
