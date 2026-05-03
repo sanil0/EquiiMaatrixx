@@ -84,7 +84,7 @@ export class EmployeeDashboardComponent implements OnInit {
     this.marketPriceLoading = true;
     this.marketPriceError = null;
 
-    this.marketPriceService.getPrice('IBM').subscribe({
+    this.marketPriceService.getPrice('SCHW').subscribe({
       next: (price: any) => {
         this.currentMarketPrice = price.adjustedClosePrice;
         this.marketPriceLoading = false;
@@ -102,7 +102,7 @@ export class EmployeeDashboardComponent implements OnInit {
   ========================================================================= */
 
   loadPriceHistory(): void {
-    this.marketPriceService.getPriceHistory('IBM', 15).subscribe({
+    this.marketPriceService.getPriceHistory('SCHW', 15).subscribe({
       next: (history: any) => {
 
         const entries: Array<{ date: Date; price: number }> = history
