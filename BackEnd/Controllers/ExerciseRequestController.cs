@@ -299,6 +299,29 @@ namespace BackEnd.Controllers
                 return BadRequest("Only pending requests can be updated");
 
             request.Status = status;
+            
+            // UPDATE VESTING SCHEDULE STATUS WHEN APPROVED
+            if (status == "Approved" && request.VestingScheduleId.HasValue && request.VestingScheduleId > 0)
+            {
+                var vestingSchedule = await _context.VestingSchedules
+                    .FirstOrDefaultAsync(v => v.Vesting_Id == request.VestingScheduleId);
+                
+                if (vestingSchedule != null)
+                {
+                    Console.WriteLine($"DEBUG: Found vesting schedule {vestingSchedule.Vesting_Id}, current status: {vestingSchedule.Status}");
+                    if (vestingSchedule.Status == "Vested")
+                    {
+                        vestingSchedule.Status = "Exercised";
+                        Console.WriteLine($"DEBUG: Updated vesting schedule {vestingSchedule.Vesting_Id} status to Exercised");
+                    }
+                    _context.VestingSchedules.Update(vestingSchedule);
+                }
+                else
+                {
+                    Console.WriteLine($"DEBUG: Vesting schedule {request.VestingScheduleId} not found!");
+                }
+            }
+            
             await _context.SaveChangesAsync();
 
             var actionType = status == "Approved" ? "ApproveExercise" : "RejectExercise";
