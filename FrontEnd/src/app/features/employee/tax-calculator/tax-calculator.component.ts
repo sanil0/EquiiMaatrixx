@@ -21,7 +21,7 @@ export class TaxCalculatorComponent implements OnInit {
   calculation = {
     taxType: 'exercise' as 'exercise' | 'selling',
     awardType: 'esop' as 'esop' | 'rsu',
-    stockSymbol: 'IBM',
+    stockSymbol: 'SCHW',
     holdingPeriodMonths: 0,
     marketPrice: null as number | null,
     shares: 0,

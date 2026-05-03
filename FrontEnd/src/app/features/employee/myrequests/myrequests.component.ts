@@ -73,7 +73,7 @@ export class MyRequestsComponent implements OnInit {
   vestingError: string | null = null;
 
   // New properties for enhanced form
-  companySymbol = 'IBM';
+  companySymbol = 'SCHW';
   marketPrice: number | null = null;
   marketPriceLoading = false;
   marketPriceError = '';
@@ -154,7 +154,7 @@ export class MyRequestsComponent implements OnInit {
     this.showExerciseForm = true;
     this.unitsToExercise = 0;
     this.sharesToExercise = null;
-    this.companySymbol = award.symbol && !award.symbol.startsWith('AWD-') ? award.symbol : 'IBM';
+    this.companySymbol = award.symbol && !award.symbol.startsWith('AWD-') ? award.symbol : 'SCHW';
     this.marketPrice = null;
     this.marketPriceError = '';
     this.resetCalculations();
