@@ -119,11 +119,15 @@ namespace BackEnd.Controllers
             var exercisedEsop = await GetExercisedEsopUnitsAsync(employeeId);
             var vestedRsu = await GetVestedRsuUnitsAsync(employeeId);
 
+            var fmv = await _marketPriceService.GetAdjustedClosePriceAsync("SCHW");
             var shareValue = await GetShareValueAsync(employeeId, exercisedEsop + vestedRsu);
 
             var dashboardDto = new EmployeeDashboardDto
             {
                 TotalEquityGranted = totalEquityGranted,
+                ExercisedEsopUnits = exercisedEsop,
+                VestedRsuUnits = vestedRsu,
+                Fmv = fmv ?? 0m,
                 ShareValue = shareValue
             };
 
@@ -140,7 +144,7 @@ namespace BackEnd.Controllers
         private async Task<decimal> GetExercisedEsopUnitsAsync(int employeeId)
         {
             return await _context.ExerciseRequests
-                .Where(er => er.Employee_EmpId == employeeId && er.Status == "Accepted")
+                .Where(er => er.Employee_EmpId == employeeId && er.Status == "Approved")
                 .Join(
                     _context.Awards.Where(a => a.Award_Type == "ESOP"),
                     er => er.Awards_AwardId,
@@ -153,12 +157,12 @@ namespace BackEnd.Controllers
         private async Task<decimal> GetVestedRsuUnitsAsync(int employeeId)
         {
             return await _context.VestingSchedules
-                .Where(vs => vs.Employee_EmpId == employeeId && vs.Status == "Vested")
+                .Where(vs => vs.Employee_EmpId == employeeId && (vs.Status == "Vested" || vs.Status == "Exercised"))
                 .Join(
                     _context.Awards.Where(a => a.Award_Type == "RSU"),
                     vs => vs.Awards_AwardId,
                     a => a.AwardId,
-                    (vs, a) => vs.Cumulative_Vested
+                    (vs, a) => vs.Units_Vested
                 )
                 .SumAsync(units => (decimal)units);
         }
