@@ -168,7 +168,7 @@ namespace BackEnd.Controllers
             if (totalShares <= 0)
                 return 0;
 
-            var fmv = await _marketPriceService.GetAdjustedClosePriceAsync("IBM");
+            var fmv = await _marketPriceService.GetAdjustedClosePriceAsync("SCHW");
             if (fmv == null)
                 return 0;
 
