@@ -1,0 +1,60 @@
+<div class="min-h-screen bg-gradient-to-b from-blue-50 to-white">
+  <!-- Hero Header -->
+  <div class="bg-slate-950 text-white py-14 shadow-xl">
+    <div class="max-w-6xl mx-auto px-6 flex flex-col lg:flex-row items-start justify-between gap-6">
+      <div class="space-y-4">
+        <p class="text-sm uppercase tracking-[0.4em] text-slate-400">Who We Are</p>
+        <h1 class="text-4xl md:text-5xl font-semibold leading-tight">About Us</h1>
+        <p class="max-w-2xl text-slate-300 text-lg">Get to know more about our company, mission, and vision.</p>
+</div>
+      <div class="flex gap-3">
+        <button (click)="backToDashboard()" class="inline-flex items-center justify-center rounded-full bg-cyan-500 px-6 py-3 text-sm font-semibold text-slate-950 shadow-lg shadow-cyan-500/20 transition hover:bg-cyan-400">
+          Back to Dashboard
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="max-w-4xl mx-auto px-4 py-16">
+    <!-- Company Overview -->
+    <section class="mb-16">
+      <h2 class="text-3xl font-bold mb-6 text-gray-800">Who We Are</h2>
+      <div class="bg-white rounded-lg shadow-md p-8 space-y-4">
+        <p class="text-lg text-gray-700">
+          {{ companyDetails.description }}
+        </p>
+        <p class="text-gray-600 font-semibold">Founded in {{ companyDetails.founded }} | Headquarters: {{ companyDetails.headquarters }}</p>
+      </div>
+    </section>
+
+    <!-- Mission & Vision -->
+    <section class="mb-16 grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div class="bg-white rounded-lg shadow-md p-8">
+        <h3 class="text-2xl font-bold mb-4 text-blue-600">Our Mission</h3>
+        <p class="text-gray-700">
+          {{ companyDetails.mission }}
+        </p>
+      </div>
+      <div class="bg-white rounded-lg shadow-md p-8">
+        <h3 class="text-2xl font-bold mb-4 text-blue-600">Our Vision</h3>
+        <p class="text-gray-700">
+          {{ companyDetails.vision }}
+        </p>
+      </div>
+    </section>
+
+    <!-- Key Features Section -->
+    <section class="mb-16">
+      <h2 class="text-3xl font-bold mb-6 text-gray-800">Key Features</h2>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div *ngFor="let feature of features" class="bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow">
+          <h4 class="text-lg font-bold text-blue-600 mb-3">{{ feature.title }}</h4>
+          <p class="text-gray-600">{{ feature.description }}</p>
+        </div>
+      </div>
+    </section>
+
+   
+  </div>
+</div>
