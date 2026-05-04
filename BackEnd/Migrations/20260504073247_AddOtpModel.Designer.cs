@@ -4,6 +4,7 @@ using BackEnd.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BackEnd.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260504073247_AddOtpModel")]
+    partial class AddOtpModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -215,8 +218,6 @@ namespace BackEnd.Migrations
                     b.ToTable("Notifications");
                 });
 
-<<<<<<< HEAD
-=======
             modelBuilder.Entity("BackEnd.Models.Otp", b =>
                 {
                     b.Property<int>("OtpId")
@@ -253,7 +254,6 @@ namespace BackEnd.Migrations
                     b.ToTable("Otps");
                 });
 
->>>>>>> other
             modelBuilder.Entity("BackEnd.Models.TaxCountry", b =>
                 {
                     b.Property<int>("Id")

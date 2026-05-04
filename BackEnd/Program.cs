@@ -63,6 +63,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 // SINGLETON SERVICES
 // =============================
 builder.Services.AddSingleton<BackEnd.Services.ILoginService, BackEnd.Services.LoginService>();
+builder.Services.AddHttpClient<EmailService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
 
 // =============================
 // TAX CONFIGURATION
@@ -129,9 +131,13 @@ if (app.Environment.IsDevelopment())
 }
 
 // Middleware order is VERY important
-app.UseHttpsRedirection();
-
 app.UseCors("AllowAngular");
+
+// Disable HTTPS redirect in development to avoid CORS issues
+if (!app.Environment.IsDevelopment())
+{
+    app.UseHttpsRedirection();
+}
 
 app.UseAuthentication();   //  JWT Authentication
 app.UseAuthorization();    //  Role-based Authorization
