@@ -215,8 +215,6 @@ namespace BackEnd.Migrations
                     b.ToTable("Notifications");
                 });
 
-<<<<<<< HEAD
-=======
             modelBuilder.Entity("BackEnd.Models.Otp", b =>
                 {
                     b.Property<int>("OtpId")
@@ -253,7 +251,6 @@ namespace BackEnd.Migrations
                     b.ToTable("Otps");
                 });
 
->>>>>>> other
             modelBuilder.Entity("BackEnd.Models.TaxCountry", b =>
                 {
                     b.Property<int>("Id")
