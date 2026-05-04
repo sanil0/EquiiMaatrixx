@@ -28,12 +28,12 @@ export class AwardsComponent implements OnInit {
   awards: any[] = [];
   filteredAwards: any[] = [];
 
-  createGrant = {
+  createGrant: any = {
     employeeId: '',
     grantType: 'ESOP',
-    numberOfShares: 0,
-    strikePrice: 0,
-    symbol: 'IBM',
+    numberOfShares: null,
+    strikePrice: null,
+    symbol: 'SCHW',
     grantDate: ''
   };
 
@@ -41,9 +41,9 @@ export class AwardsComponent implements OnInit {
     awardId: 0,
     employeeId: '',
     grantType: 'ESOP',
-    numberOfShares: 0,
-    strikePrice: 0,
-    symbol: 'IBM',
+    numberOfShares: null,
+    strikePrice: null,
+    symbol: 'SCHW',
     grantDate: ''
   };
 
@@ -64,7 +64,7 @@ export class AwardsComponent implements OnInit {
             grantType: item.award_Type ?? item.Award_Type ?? item.grantType ?? '',
             numberOfShares: item.total_Units ?? item.Total_Units ?? item.numberOfShares ?? 0,
             strikePrice: item.exercise_Price ?? item.Exercise_Price ?? item.strikePrice ?? 0,
-            symbol: item.symbol ?? 'IBM',
+            symbol: item.symbol ?? 'SCHW',
             grantDate: item.grant_Date ?? item.Grant_Date ?? item.grantDate ?? '',
             marketPrice: null,
             marketPriceLoading: false
@@ -84,13 +84,13 @@ export class AwardsComponent implements OnInit {
   }
 
   loadMarketPrices(): void {
-    const symbols = ['IBM']; // Use IBM for all awards
+    const symbols = ['SCHW']; // Use SCHW for all awards
     if (symbols.length === 0) return;
 
     this.marketPriceService.getPricesBatch(symbols).then((priceMap: { [symbol: string]: number }) => {
       this.awards.forEach(award => {
-        if (priceMap['IBM']) {
-          award.marketPrice = priceMap['IBM'];
+        if (priceMap['SCHW']) {
+          award.marketPrice = priceMap['SCHW'];
           award.marketPriceLoading = false;
         }
       });
@@ -115,9 +115,9 @@ export class AwardsComponent implements OnInit {
     this.createGrant = {
       employeeId: '',
       grantType: 'ESOP',
-      numberOfShares: 0,
-      strikePrice: 0,
-      symbol: 'IBM',
+      numberOfShares: null,
+      strikePrice: null,
+      symbol: 'SCHW',
       grantDate: ''
     };
     this.showCreatePopup = true;
@@ -130,7 +130,7 @@ export class AwardsComponent implements OnInit {
   }
 
   submitCreateAward(): void {
-    if (!this.createGrant.employeeId || !this.createGrant.grantDate || this.createGrant.numberOfShares <= 0) {
+    if (!this.createGrant.employeeId || !this.createGrant.grantDate || !this.createGrant.numberOfShares) {
       alert('Please fill in all required fields');
       return;
     }
@@ -165,7 +165,7 @@ export class AwardsComponent implements OnInit {
       grantType: award.grantType,
       numberOfShares: award.numberOfShares,
       strikePrice: award.strikePrice,
-      symbol: award.symbol || 'IBM',
+      symbol: award.symbol || 'SCHW',
       grantDate: award.grantDate
     };
     this.showEditPopup = true;
@@ -178,7 +178,7 @@ export class AwardsComponent implements OnInit {
   }
 
   submitEditAward(): void {
-    if (!this.editGrant.employeeId || !this.editGrant.grantDate || this.editGrant.numberOfShares <= 0) {
+    if (!this.editGrant.grantDate || !this.editGrant.numberOfShares) {
       alert('Please fill in all required fields');
       return;
     }

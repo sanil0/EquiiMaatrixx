@@ -1,16 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService, LoginResponse } from '../../../core/services/auth.service';
 import { FormsModule } from '@angular/forms';
-import { NgClass } from '@angular/common';
+import { NgClass, CommonModule } from '@angular/common';
+import { ForgotPasswordModalComponent } from '../forgot-password-modal/forgot-password-modal.component';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule, NgClass],
+  imports: [FormsModule, NgClass, CommonModule, ForgotPasswordModalComponent],
   templateUrl: './login.component.html'
 })
 export class LoginComponent {
+
+  @ViewChild(ForgotPasswordModalComponent) forgotPasswordModal!: ForgotPasswordModalComponent;
 
   email: string = '';
   password: string = '';
@@ -40,5 +43,9 @@ export class LoginComponent {
           alert("Invalid Credentials");
         }
       });
+  }
+
+  openForgotPasswordModal() {
+    this.forgotPasswordModal.open();
   }
 }
