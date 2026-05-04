@@ -1,0 +1,90 @@
+<div class="min-h-screen bg-slate-50 text-slate-900">
+  <!-- Hero Header -->
+  <div class="bg-slate-950 text-white py-16 shadow-xl">
+    <div class="max-w-6xl mx-auto px-6 flex flex-col lg:flex-row items-start justify-between gap-6">
+      <div class="space-y-4">
+        <p class="text-sm uppercase tracking-[0.4em] text-slate-400">Support Center</p>
+        <h1 class="text-5xl md:text-6xl font-bold leading-tight">Frequently Asked Questions</h1>
+        <p class="max-w-2xl text-slate-300 text-lg">Find answers to common questions about EquiMatrix, equity awards, and account management.</p>
+      </div>
+      <div class="flex gap-3">
+        <button (click)="backToDashboard()" class="inline-flex items-center justify-center rounded-full bg-cyan-500 px-6 py-3 text-sm font-semibold text-slate-950 shadow-lg shadow-cyan-500/20 transition hover:bg-cyan-400">
+          Back to Dashboard
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="max-w-4xl mx-auto px-6 py-16">
+    <div class="mb-12">
+      <p class="text-sm uppercase tracking-[0.3em] text-slate-500 mb-3">Help Center</p>
+      <h2 class="text-4xl font-bold text-slate-900 mb-4">Frequently Asked Questions</h2>
+      <p class="text-lg text-slate-600">Find comprehensive answers to common questions about EquiMatrix, equity awards, and account management.</p>
+    </div>
+    <!-- Category Filter -->
+    <div class="mb-12">
+      <p class="text-sm uppercase tracking-[0.3em] text-slate-500 mb-4">Filter by Category</p>
+      <div class="flex flex-wrap gap-3">
+        <button
+          (click)="selectedCategory = null"
+          [class.active]="selectedCategory === null"
+          class="rounded-full px-4 py-2 text-sm font-medium transition"
+          [ngClass]="selectedCategory === null
+            ? 'bg-cyan-500 text-slate-950 shadow-lg shadow-cyan-500/20'
+            : 'border border-slate-200 text-slate-700 hover:border-slate-300'">
+          All
+        </button>
+        <button
+          *ngFor="let category of categories"
+          (click)="selectedCategory = category"
+          [class.active]="selectedCategory === category"
+          class="rounded-full px-4 py-2 text-sm font-medium transition"
+          [ngClass]="selectedCategory === category
+            ? 'bg-cyan-500 text-slate-950 shadow-lg shadow-cyan-500/20'
+            : 'border border-slate-200 text-slate-700 hover:border-slate-300'">
+          {{ category }}
+        </button>
+      </div>
+    </div>
+
+    <!-- FAQs List -->
+    <div class="space-y-4">
+      <div
+        *ngFor="let faq of filterFAQs()"
+        class="rounded-[20px] border border-slate-200 bg-white shadow-lg shadow-slate-200/70 overflow-hidden transition-all duration-300"
+        [class.expanded]="expandedId === faq.id">
+        <!-- Question Header -->
+        <button
+          (click)="toggleFAQ(faq.id)"
+          class="w-full px-8 py-6 text-left hover:bg-slate-50 transition-colors flex items-start justify-between gap-4">
+          <div class="flex-1">
+            <span class="inline-block mb-3 text-xs font-medium uppercase tracking-[0.3em] text-cyan-600">
+              {{ faq.category }}
+            </span>
+            <h3 class="text-lg font-semibold text-slate-900">{{ faq.question }}</h3>
+          </div>
+          <div class="flex-shrink-0 mt-1">
+            <svg
+              class="w-6 h-6 text-slate-400 transition-transform duration-300"
+              [class.rotate-180]="expandedId === faq.id"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+            </svg>
+          </div>
+        </button>
+
+        <!-- Answer Content -->
+        <div
+          *ngIf="expandedId === faq.id"
+          class="border-t border-slate-100 bg-slate-50 px-8 py-6">
+          <p class="text-slate-700 leading-relaxed">{{ faq.answer }}</p>
+        </div>
+      </div>
+    </div>
+
+   
+  </div>
+</div>

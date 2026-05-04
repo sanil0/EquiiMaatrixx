@@ -1,27 +1,98 @@
-<div class="bg-gray-800 text-white px-10 py-6 grid grid-cols-4 gap-6 text-sm">
+<footer class="bg-slate-950 text-slate-100 border-t border-slate-800">
+  <!-- Main Footer Content -->
+  <div class="max-w-7xl mx-auto px-6 py-12">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 mb-8">
+      <!-- Brand Section -->
+      <div class="lg:col-span-1">
+        <h2 class="text-xl font-bold text-white mb-4">EquiMatrix</h2>
+        <p class="text-sm text-slate-400 leading-relaxed">Transform equity management with modern, secure, and transparent solutions.</p>
+      </div>
 
-  <div>
-    <h2 class="font-bold mb-2 text-lg">EquiMatrix</h2>
-    <p>About</p>
-    <p>Key Features</p>
-    <p>News & Updates</p>
+      <!-- Company Section -->
+      <div>
+        <h3 class="font-bold text-white mb-4 text-sm uppercase tracking-wider">Company</h3>
+        <ul class="space-y-3">
+          <li>
+            <button routerLink="/about-us" class="text-slate-300 hover:text-cyan-400 transition-colors text-sm font-medium">
+              About Us
+            </button>
+          </li>
+          <li>
+            <button routerLink="/key-features" class="text-slate-300 hover:text-cyan-400 transition-colors text-sm font-medium">
+              Key Features
+            </button>
+          </li>
+          <li>
+            <button routerLink="/news-updates" class="text-slate-300 hover:text-cyan-400 transition-colors text-sm font-medium">
+              News & Updates
+            </button>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Help Section -->
+      <div>
+        <h3 class="font-bold text-white mb-4 text-sm uppercase tracking-wider">Help & Support</h3>
+        <ul class="space-y-3">
+          <li>
+            <button routerLink="/faqs" class="text-slate-300 hover:text-cyan-400 transition-colors text-sm font-medium">
+              FAQs
+            </button>
+          </li>
+          <li>
+            <button routerLink="/contact-support" class="text-slate-300 hover:text-cyan-400 transition-colors text-sm font-medium">
+              Contact Support
+            </button>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Important Section -->
+      <div>
+        <h3 class="font-bold text-white mb-4 text-sm uppercase tracking-wider">Information</h3>
+        <ul class="space-y-3">
+          <li>
+            <button routerLink="/tax-information" class="text-slate-300 hover:text-cyan-400 transition-colors text-sm font-medium">
+              Tax Information
+            </button>
+          </li>
+          <li>
+            <button routerLink="/legal-notices" class="text-slate-300 hover:text-cyan-400 transition-colors text-sm font-medium">
+              Legal Notices
+            </button>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Connect Section -->
+      <div>
+        <h3 class="font-bold text-white mb-4 text-sm uppercase tracking-wider">Feedback</h3>
+        <ul class="space-y-3">
+          <li>
+            <button routerLink="/suggestions-feedback" class="text-slate-300 hover:text-cyan-400 transition-colors text-sm font-medium">
+              Suggestions & Feedback
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Divider -->
+    <div class="border-t border-slate-800 py-8">
+      <!-- Bottom Section -->
+      <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+        <div class="text-sm text-slate-400">
+          <p>&copy; 2024-2026 EquiMatrix, Inc. All rights reserved.</p>
+        </div>
+        <div class="flex gap-6">
+          <a href="mailto:support&#64;equimatrix.com" class="text-slate-400 hover:text-cyan-400 transition-colors text-sm">
+            support&#64;equimatrix.com
+          </a>
+          <a href="https://equimatrix.com" target="_blank" rel="noopener noreferrer" class="text-slate-400 hover:text-cyan-400 transition-colors text-sm">
+            www.equimatrix.com
+          </a>
+        </div>
+      </div>
+    </div>
   </div>
-
-  <div>
-    <h2 class="font-bold mb-2">Help & Reference</h2>
-    <p>FAQs</p>
-    <p>Contact Support</p>
-  </div>
-
-  <div>
-    <h2 class="font-bold mb-2">Important Info</h2>
-    <p>Tax Information</p>
-    <p>Legal Notices</p>
-  </div>
-
-  <div>
-    <h2 class="font-bold mb-2">Connect</h2>
-    <p>Suggestion & Feedback</p>
-  </div>
-
-</div>
+</footer>
