@@ -17,6 +17,7 @@ namespace BackEnd.Data
         public DbSet<TaxCountry> TaxCountries { get; set; }
         public DbSet<TaxRegime> TaxRegimes { get; set; }
         public DbSet<TaxSlab> TaxSlabs { get; set; }
+        public DbSet<Otp> Otps { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
 {
