@@ -4,6 +4,16 @@ import { EmplayoutComponent } from './shared/emplayout/emplayout.component';
 import { WildcardComponent } from './shared/wildcard/wildcard.component';
 import { LoginComponent } from './features/auth/login/login.component';
 
+// Footer Pages
+import { AboutUsComponent } from './features/footer-pages/footer-pages/about-us/about-us.component';
+import { KeyFeaturesComponent } from './features/footer-pages/footer-pages/key-features/key-features.component';
+import { NewsUpdatesComponent } from './features/footer-pages/footer-pages/news-updates/news-updates.component';
+import { FAQsComponent } from './features/footer-pages/footer-pages/faqs/faqs.component';
+import { ContactSupportComponent } from './features/footer-pages/footer-pages/contact-support/contact-support.component';
+import { TaxInformationComponent } from './features/footer-pages/footer-pages/tax-information/tax-information.component';
+import { LegalNoticesComponent } from './features/footer-pages/footer-pages/legal-notices/legal-notices.component';
+import { SuggestionsFeedbackComponent } from './features/footer-pages/footer-pages/suggestions-feedback/suggestions-feedback.component';
+
 // Admin
 import { DashboardComponent } from './features/admin/dashboard/dashboard.component';
 import { AwardsComponent } from './features/admin/awards/awards.component';
@@ -28,6 +38,16 @@ import { loginGuard } from './core/guards/login.guard';
 export const routes: Routes = [
 
   { path: '', component: LoginComponent, canActivate: [loginGuard] },
+
+  // Footer Pages
+  { path: 'about-us', component: AboutUsComponent },
+  { path: 'key-features', component: KeyFeaturesComponent },
+  { path: 'news-updates', component: NewsUpdatesComponent },
+  { path: 'faqs', component: FAQsComponent },
+  { path: 'contact-support', component: ContactSupportComponent },
+  { path: 'tax-information', component: TaxInformationComponent },
+  { path: 'legal-notices', component: LegalNoticesComponent },
+  { path: 'suggestions-feedback', component: SuggestionsFeedbackComponent },
 
   {
     path: 'admin',
