@@ -70,9 +70,9 @@
             Remember me
           </label>
 
-          <span class="text-[#003482] cursor-pointer hover:underline">
+          <button type="button" (click)="openForgotPasswordModal()" *ngIf="selectedRole !== 'Admin'" class="text-[#003482] cursor-pointer hover:underline font-medium">
             Forgot password?
-          </span>
+          </button>
         </div>
 
         <!-- Button -->
@@ -87,3 +87,6 @@
 
   </div>
 </div>
+
+<!-- Forgot Password Modal -->
+<app-forgot-password-modal #forgotPasswordModal></app-forgot-password-modal>
