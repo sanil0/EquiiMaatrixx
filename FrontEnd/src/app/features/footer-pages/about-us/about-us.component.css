@@ -1,0 +1,16 @@
+/* About Us Component Styles */
+:host {
+  display: block;
+}
+
+button {
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+button:hover {
+  transform: translateY(-1px);
+}
+
+section {
+  letter-spacing: 0.02em;
+}
