@@ -29,6 +29,10 @@
         Login to your account
       </h2>
 
+      <div *ngIf="warningMessage" class="mb-6 rounded-lg border border-red-200 bg-red-50 p-4 text-sm text-red-800">
+        <strong>Session expired:</strong> {{ warningMessage }}
+      </div>
+
       <form (ngSubmit)="onLogin()" class="space-y-6 max-w-md">
 
         <!-- TOGGLE SWITCH (BEST UI) -->
