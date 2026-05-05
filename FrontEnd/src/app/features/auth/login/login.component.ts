@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService, LoginResponse } from '../../../core/services/auth.service';
 import { FormsModule } from '@angular/forms';
@@ -11,15 +11,24 @@ import { ForgotPasswordModalComponent } from '../forgot-password-modal/forgot-pa
   imports: [FormsModule, NgClass, CommonModule, ForgotPasswordModalComponent],
   templateUrl: './login.component.html'
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
 
   @ViewChild(ForgotPasswordModalComponent) forgotPasswordModal!: ForgotPasswordModalComponent;
 
   email: string = '';
   password: string = '';
   selectedRole: string = 'Employee';  // Important: capital E
+  warningMessage: string | null = null;
 
   constructor(private auth: AuthService, private router: Router) {}
+
+  ngOnInit(): void {
+    const message = localStorage.getItem('sessionExpiredMessage');
+    if (message) {
+      this.warningMessage = message;
+      localStorage.removeItem('sessionExpiredMessage');
+    }
+  }
 
   onLogin() {
     this.auth.login(this.email, this.password, this.selectedRole)
