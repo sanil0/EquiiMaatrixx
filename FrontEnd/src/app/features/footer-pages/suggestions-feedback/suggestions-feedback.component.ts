@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
+import { FeedbackService } from '../../../core/services/feedback.service';
 
 interface FeedbackForm {
   name: string;
@@ -32,6 +33,8 @@ export class SuggestionsFeedbackComponent {
 
   submitted = false;
   submitting = false;
+  errorMessage = '';
+  successMessage = '';
 
   feedbackTypes = [
     { value: 'suggestion', label: 'Feature Suggestion' },
@@ -86,7 +89,11 @@ export class SuggestionsFeedbackComponent {
     }
   ];
 
-  constructor(private auth: AuthService, private router: Router) {}
+  constructor(
+    private auth: AuthService,
+    private router: Router,
+    private feedbackService: FeedbackService
+  ) {}
 
   backToDashboard(): void {
     const role = this.auth.getUserRole();
@@ -101,20 +108,36 @@ export class SuggestionsFeedbackComponent {
   }
 
   onSubmit(): void {
-    if (this.form.name && this.form.email && this.form.subject && this.form.message) {
-      this.submitting = true;
-      
-      // Simulate form submission
-      setTimeout(() => {
-        this.submitting = false;
-        this.submitted = true;
-        
-        // Reset form after 3 seconds
-        setTimeout(() => {
-          this.resetForm();
-        }, 3000);
-      }, 1500);
+    if (!this.isFormValid()) {
+      return;
     }
+
+    this.submitting = true;
+    this.errorMessage = '';
+    this.successMessage = '';
+
+    this.feedbackService.submitFeedback(this.form).subscribe({
+      next: (response) => {
+        this.submitting = false;
+        
+        if (response.success) {
+          this.submitted = true;
+          this.successMessage = response.message;
+          
+          // Auto-hide success message and reset form after 5 seconds
+          setTimeout(() => {
+            this.resetForm();
+          }, 5000);
+        } else {
+          this.errorMessage = response.message || 'Failed to submit feedback';
+        }
+      },
+      error: (error) => {
+        this.submitting = false;
+        this.errorMessage = error.error?.message || 'An error occurred while submitting your feedback. Please try again.';
+        console.error('Feedback submission error:', error);
+      }
+    });
   }
 
   resetForm(): void {
@@ -127,10 +150,12 @@ export class SuggestionsFeedbackComponent {
       rating: 5
     };
     this.submitted = false;
+    this.errorMessage = '';
+    this.successMessage = '';
   }
 
   isFormValid(): boolean {
-    return !!(this.form.name && this.form.email && this.form.subject && this.form.message);
+    return !!(this.form.name && this.form.email && this.form.subject && this.form.message && this.form.rating);
   }
 
   getStatusColor(status: string): string {
