@@ -5,14 +5,14 @@ import { WildcardComponent } from './shared/wildcard/wildcard.component';
 import { LoginComponent } from './features/auth/login/login.component';
 
 // Footer Pages
-import { AboutUsComponent } from './features/footer-pages/footer-pages/about-us/about-us.component';
-import { KeyFeaturesComponent } from './features/footer-pages/footer-pages/key-features/key-features.component';
-import { NewsUpdatesComponent } from './features/footer-pages/footer-pages/news-updates/news-updates.component';
-import { FAQsComponent } from './features/footer-pages/footer-pages/faqs/faqs.component';
-import { ContactSupportComponent } from './features/footer-pages/footer-pages/contact-support/contact-support.component';
-import { TaxInformationComponent } from './features/footer-pages/footer-pages/tax-information/tax-information.component';
-import { LegalNoticesComponent } from './features/footer-pages/footer-pages/legal-notices/legal-notices.component';
-import { SuggestionsFeedbackComponent } from './features/footer-pages/footer-pages/suggestions-feedback/suggestions-feedback.component';
+import { AboutUsComponent } from './features/footer-pages/about-us/about-us.component';
+import { KeyFeaturesComponent } from './features/footer-pages/key-features/key-features.component';
+import { NewsUpdatesComponent } from './features/footer-pages/news-updates/news-updates.component';
+import { FAQsComponent } from './features/footer-pages/faqs/faqs.component';
+import { ContactSupportComponent } from './features/footer-pages/contact-support/contact-support.component';
+import { TaxInformationComponent } from './features/footer-pages/tax-information/tax-information.component';
+import { LegalNoticesComponent } from './features/footer-pages/legal-notices/legal-notices.component';
+import { SuggestionsFeedbackComponent } from './features/footer-pages/suggestions-feedback/suggestions-feedback.component';
 
 // Admin
 import { DashboardComponent } from './features/admin/dashboard/dashboard.component';

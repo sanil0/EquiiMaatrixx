@@ -1,0 +1,20 @@
+/* Key Features Component Styles */
+:host {
+  display: block;
+}
+
+button {
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+button:hover {
+  transform: translateY(-1px);
+}
+
+.group:hover {
+  transform: translateY(-2px);
+}
+
+ul li {
+  line-height: 1.5;
+}
