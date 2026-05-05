@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../../core/services/auth.service';
+import { ContactService } from '../../../core/services/contact.service';
 
 interface ContactForm {
   name: string;
@@ -30,6 +31,7 @@ export class ContactSupportComponent {
 
   submitted = false;
   submitting = false;
+  errorMessage = '';
 
   categories = [
     { value: 'general', label: 'General Inquiry' },
@@ -54,17 +56,14 @@ export class ContactSupportComponent {
       contact: '+1 (800) 555-0123',
       icon: '📞',
       availability: 'Mon-Fri, 9 AM - 6 PM EST'
-    },
-    // {
-    //   title: 'Live Chat',
-    //   description: 'Chat with our support team in real-time',
-    //   contact: 'Available on dashboard',
-    //   icon: '💬',
-    //   availability: 'Mon-Fri, 10 AM - 5 PM EST'
-    // }
+    }
   ];
 
-  constructor(private auth: AuthService, private router: Router) {}
+  constructor(
+    private auth: AuthService,
+    private router: Router,
+    private contactService: ContactService
+  ) {}
 
   backToDashboard(): void {
     const role = this.auth.getUserRole();
@@ -79,19 +78,35 @@ export class ContactSupportComponent {
   }
 
   onSubmit(): void {
-    if (this.form.name && this.form.email && this.form.subject && this.form.message) {
+    if (this.isFormValid()) {
       this.submitting = true;
-      
-      // Simulate form submission
-      setTimeout(() => {
-        this.submitting = false;
-        this.submitted = true;
-        
-        // Reset form after 3 seconds
-        setTimeout(() => {
-          this.resetForm();
-        }, 3000);
-      }, 1500);
+      this.errorMessage = '';
+
+      this.contactService.submitContact({
+        name: this.form.name,
+        email: this.form.email,
+        category: this.form.category,
+        subject: this.form.subject,
+        message: this.form.message
+      }).subscribe({
+        next: (response) => {
+          this.submitting = false;
+          if (response.success) {
+            this.submitted = true;
+            // Reset form after 5 seconds
+            setTimeout(() => {
+              this.resetForm();
+            }, 5000);
+          } else {
+            this.errorMessage = response.message || 'An error occurred. Please try again.';
+          }
+        },
+        error: (error) => {
+          this.submitting = false;
+          console.error('Error submitting contact:', error);
+          this.errorMessage = error.error?.message || 'Failed to submit contact request. Please try again.';
+        }
+      });
     }
   }
 
@@ -104,6 +119,7 @@ export class ContactSupportComponent {
       message: ''
     };
     this.submitted = false;
+    this.errorMessage = '';
   }
 
   isFormValid(): boolean {

@@ -18,6 +18,8 @@ namespace BackEnd.Data
         public DbSet<TaxRegime> TaxRegimes { get; set; }
         public DbSet<TaxSlab> TaxSlabs { get; set; }
         public DbSet<Otp> Otps { get; set; }
+        public DbSet<Feedback> Feedbacks { get; set; }
+        public DbSet<Contact> Contacts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
 {
