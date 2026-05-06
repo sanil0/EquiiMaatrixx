@@ -32,7 +32,7 @@
       #rlaDashboard="routerLinkActive" class="flex items-center justify-between px-4 py-2 rounded-xl group" [ngClass]="{
         'bg-[#D1FADF] text-[#22C55E]': rlaDashboard.isActive,
         'hover:bg-slate-100 text-slate-600': !rlaDashboard.isActive
-      }">
+      }" (click)="onMenuItemClick()">
       <span class="font-medium">Dashboard</span>
     </a>
 
@@ -41,7 +41,7 @@
       class="flex items-center justify-between px-4 py-2 rounded-xl group" [ngClass]="{
         'bg-[#D1FADF] text-[#22C55E]': rlaUsers.isActive,
         'hover:bg-slate-100 text-slate-600': !rlaUsers.isActive
-      }">
+      }" (click)="onMenuItemClick()">
       <span class="font-medium">Employees</span>
     </a>
 
@@ -50,7 +50,7 @@
       class="flex items-center justify-between px-4 py-2 rounded-xl group" [ngClass]="{
         'bg-[#D1FADF] text-[#22C55E]': rlaAwards.isActive,
         'hover:bg-slate-100 text-slate-600': !rlaAwards.isActive
-      }">
+      }" (click)="onMenuItemClick()">
       <span class="font-medium">Awards</span>
     </a>
 
@@ -59,7 +59,7 @@
       class="flex items-center justify-between px-4 py-2 rounded-xl group" [ngClass]="{
         'bg-[#D1FADF] text-[#22C55E]': rlaExercise.isActive,
         'hover:bg-slate-100 text-slate-600': !rlaExercise.isActive
-      }">
+      }" (click)="onMenuItemClick()">
       <span class="font-medium">Exercise Requests</span>
     </a>
 
@@ -68,7 +68,7 @@
       class="flex items-center justify-between px-4 py-2 rounded-xl group" [ngClass]="{
         'bg-[#D1FADF] text-[#22C55E]': rlaReports.isActive,
         'hover:bg-slate-100 text-slate-600': !rlaReports.isActive
-      }">
+      }" (click)="onMenuItemClick()">
       <span class="font-medium">Reports</span>
     </a>
 
@@ -77,7 +77,7 @@
       class="flex items-center justify-between px-4 py-2 rounded-xl group" [ngClass]="{
         'bg-[#D1FADF] text-[#22C55E]': rlaNotif.isActive,
         'hover:bg-slate-100 text-slate-600': !rlaNotif.isActive
-      }">
+      }" (click)="onMenuItemClick()">
       <span class="font-medium">Notifications</span>
     </a>
 

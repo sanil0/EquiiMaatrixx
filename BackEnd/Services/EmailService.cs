@@ -143,7 +143,7 @@ namespace BackEnd.Services
                 var brevoApiKey = _config["EmailSettings:BrevoApiKey"];
                 var senderEmail = _config["EmailSettings:EmailAddress"];
                 var senderName = "EquiMatrix Support";
-                var adminEmail = "sanilprajwal2@gmail.com"; // Admin email to receive feedback
+                var adminEmail = "shettyvarshh@gmail.com"; // Admin email to receive feedback
 
                 if (string.IsNullOrEmpty(brevoApiKey))
                 {
@@ -201,7 +201,7 @@ namespace BackEnd.Services
                 var brevoApiKey = _config["EmailSettings:BrevoApiKey"];
                 var senderEmail = _config["EmailSettings:EmailAddress"];
                 var senderName = "EquiMatrix Support";
-                var adminEmail = "sanilprajwal2@gmail.com"; // Admin email to receive contact requests
+                var adminEmail = "shettyvarshh@gmail.com"; // Admin email to receive contact requests
 
                 if (string.IsNullOrEmpty(brevoApiKey))
                 {
