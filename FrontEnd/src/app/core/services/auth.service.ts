@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
 
@@ -17,7 +18,7 @@ export class AuthService {
   private baseUrl = 'https://localhost:7132/api/auth/login';
   private logoutUrl = 'https://localhost:7132/api/auth/logout';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   login(email: string, password: string, role: string): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(this.baseUrl, {
@@ -83,10 +84,12 @@ export class AuthService {
       next: () => {
         console.log('Backend logout successful');
         localStorage.removeItem('token');
+        this.router.navigate(['/login']);
       },
       error: (error) => {
         console.log('Backend logout error:', error);
         localStorage.removeItem('token');
+        this.router.navigate(['/login']);
       }
     });
   }
