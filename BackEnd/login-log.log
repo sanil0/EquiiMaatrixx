@@ -54,3 +54,4 @@
 [2026-05-06T12:19:38.5835847Z] Email=rob@company.com, EmployeeId=2, Success=True, Message=Logout successful, IpAddress=::1
 [2026-05-06T12:20:57.0445891Z] Email=rob@company.com, EmployeeId=2, Success=True, Message=Login successful, IpAddress=::1
 [2026-05-06T12:30:40.0206878Z] Email=rob@company.com, EmployeeId=2, Success=True, Message=Logout successful, IpAddress=::1
+[2026-05-06T12:49:05.4126045Z] Email=rob@company.com, EmployeeId=2, Success=True, Message=Login successful, IpAddress=::1
