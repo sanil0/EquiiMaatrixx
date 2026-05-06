@@ -44,9 +44,10 @@
       }"
       (click)="onMenuItemClick()"
     >
-      <span class="font-medium">
-        Dashboard
-      </span>
+      <div class="flex items-center gap-3">
+        <span class="material-icons text-lg">dashboard</span>
+        <span class="font-medium">Dashboard</span>
+      </div>
     </a>
 
     <!-- VESTING SCHEDULE -->
@@ -61,9 +62,10 @@
       }"
       (click)="onMenuItemClick()"
     >
-      <span class="font-medium">
-        Vesting Schedule
-      </span>
+      <div class="flex items-center gap-3">
+        <span class="material-icons text-lg">schedule</span>
+        <span class="font-medium">Vesting Schedule</span>
+      </div>
     </a>
 
     <!-- TAX CALCULATOR -->
@@ -78,9 +80,10 @@
       }"
       (click)="onMenuItemClick()"
     >
-      <span class="font-medium">
-        Tax Calculator
-      </span>
+      <div class="flex items-center gap-3">
+        <span class="material-icons text-lg">calculate</span>
+        <span class="font-medium">Tax Calculator</span>
+      </div>
     </a>
 
     <!-- MY REQUESTS -->
@@ -95,9 +98,10 @@
       }"
       (click)="onMenuItemClick()"
     >
-      <span class="font-medium">
-        My Requests
-      </span>
+      <div class="flex items-center gap-3">
+        <span class="material-icons text-lg">assignment</span>
+        <span class="font-medium">My Requests</span>
+      </div>
     </a>
 
     <!-- NOTIFICATIONS -->
@@ -112,9 +116,15 @@
       }"
       (click)="onMenuItemClick()"
     >
-      <span class="font-medium">
-        Notifications
-      </span>
+      <div class="flex items-center gap-3">
+        <div class="relative">
+          <span class="material-icons text-lg">notifications</span>
+          <span *ngIf="unreadNotificationCount > 0" class="absolute -top-2 -right-2 bg-amber-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+            {{ unreadNotificationCount }}
+          </span>
+        </div>
+        <span class="font-medium">Notifications</span>
+      </div>
     </a>
 
   </nav>
