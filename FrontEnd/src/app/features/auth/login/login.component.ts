@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService, LoginResponse } from '../../../core/services/auth.service';
+import { ToastService } from '../../../core/services/toast.service';
 import { FormsModule } from '@angular/forms';
 import { NgClass, CommonModule } from '@angular/common';
 import { ForgotPasswordModalComponent } from '../forgot-password-modal/forgot-password-modal.component';
@@ -20,7 +21,7 @@ export class LoginComponent implements OnInit {
   selectedRole: string = 'Employee';  // Important: capital E
   warningMessage: string | null = null;
 
-  constructor(private auth: AuthService, private router: Router) {}
+  constructor(private auth: AuthService, private router: Router, private toastService: ToastService) {}
 
   ngOnInit(): void {
     const message = localStorage.getItem('sessionExpiredMessage');
@@ -36,7 +37,7 @@ export class LoginComponent implements OnInit {
         next: (res: LoginResponse) => {
           // Validate that the returned role matches the selected role
           if (res.role !== this.selectedRole) {
-            alert(`You do not have ${this.selectedRole} privileges. Please select the correct role.`);
+            this.toastService.warning(`You do not have ${this.selectedRole} privileges. Please select the correct role.`);
             return;
           }
 
@@ -49,7 +50,7 @@ export class LoginComponent implements OnInit {
           }
         },
         error: () => {
-          alert("Invalid Credentials");
+          this.toastService.error("Invalid Credentials");
         }
       });
   }

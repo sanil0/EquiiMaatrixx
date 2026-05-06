@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { MarketPriceService, MarketPrice } from '@core/services/market-price.service';
+import { ToastService } from '@core/services/toast.service';
 
 @Component({
   selector: 'app-awards',
@@ -17,7 +18,7 @@ import { MarketPriceService, MarketPrice } from '@core/services/market-price.ser
 })
 export class AwardsComponent implements OnInit {
 
-  constructor(private http: HttpClient, private marketPriceService: MarketPriceService) {}
+  constructor(private http: HttpClient, private marketPriceService: MarketPriceService, private toastService: ToastService) {}
 
   searchText = '';
   isLoading = false;
@@ -37,7 +38,7 @@ export class AwardsComponent implements OnInit {
     grantDate: ''
   };
 
-  editGrant = {
+  editGrant: any = {
     awardId: 0,
     employeeId: '',
     grantType: 'ESOP',
@@ -111,6 +112,24 @@ export class AwardsComponent implements OnInit {
     );
   }
 
+  onCreateGrantTypeChange(): void {
+    // Set strike price to 0 for RSU, null for ESOP
+    if (this.createGrant.grantType === 'RSU') {
+      this.createGrant.strikePrice = 0;
+    } else {
+      this.createGrant.strikePrice = null;
+    }
+  }
+
+  onEditGrantTypeChange(): void {
+    // Set strike price to 0 for RSU, null for ESOP
+    if (this.editGrant.grantType === 'RSU') {
+      this.editGrant.strikePrice = 0;
+    } else {
+      this.editGrant.strikePrice = null;
+    }
+  }
+
   openCreatePopup(): void {
     this.createGrant = {
       employeeId: '',
@@ -131,29 +150,31 @@ export class AwardsComponent implements OnInit {
 
   submitCreateAward(): void {
     if (!this.createGrant.employeeId || !this.createGrant.grantDate || !this.createGrant.numberOfShares) {
-      alert('Please fill in all required fields');
+      this.toastService.warning('Please fill in all required fields');
       return;
     }
+
+    // Set strikePrice to 0 for RSU awards, or use provided value (also defaulting to 0 if null)
+    const strikePrice = this.createGrant.grantType === 'RSU' ? 0 : (this.createGrant.strikePrice ?? 0);
 
     const payload = {
       Employee_EmpId: parseInt(this.createGrant.employeeId),
       Award_Type: this.createGrant.grantType,
       Total_Units: this.createGrant.numberOfShares,
-      Exercise_Price: this.createGrant.strikePrice,
-      Symbol: this.createGrant.symbol,
+      Exercise_Price: strikePrice,
       Grant_Date: new Date(this.createGrant.grantDate).toISOString().split('T')[0]
     };
 
     this.http.post('https://localhost:7132/api/Award', payload)
       .subscribe({
         next: () => {
-          alert('Award created successfully');
+          this.toastService.success('Award created successfully');
           this.closeCreatePopup();
           this.loadAwards();
         },
         error: (err: HttpErrorResponse) => {
           console.error('Award creation error:', err);
-          alert('Error: ' + this.getErrorMessage(err));
+          this.toastService.error('Error: ' + this.getErrorMessage(err));
         }
       });
   }
@@ -179,26 +200,29 @@ export class AwardsComponent implements OnInit {
 
   submitEditAward(): void {
     if (!this.editGrant.grantDate || !this.editGrant.numberOfShares) {
-      alert('Please fill in all required fields');
+      this.toastService.warning('Please fill in all required fields');
       return;
     }
 
+    // Set strikePrice to 0 for RSU awards, or use provided value (also defaulting to 0 if null)
+    const strikePrice = this.editGrant.grantType === 'RSU' ? 0 : (this.editGrant.strikePrice ?? 0);
+
     const payload: any = {
       Total_Units: this.editGrant.numberOfShares,
-      Exercise_Price: this.editGrant.strikePrice,
+      Exercise_Price: strikePrice,
       Symbol: this.editGrant.symbol
     };
 
     this.http.put(`https://localhost:7132/api/Award/${this.editGrant.awardId}`, payload)
       .subscribe({
         next: () => {
-          alert('Award updated successfully');
+          this.toastService.success('Award updated successfully');
           this.closeEditPopup();
           this.loadAwards();
         },
         error: (err: HttpErrorResponse) => {
           console.error('Award update error:', err);
-          alert('Error: ' + this.getErrorMessage(err));
+          this.toastService.error('Error: ' + this.getErrorMessage(err));
         }
       });
   }
@@ -208,12 +232,12 @@ export class AwardsComponent implements OnInit {
     this.http.delete(`https://localhost:7132/api/Award/${awardId}`)
       .subscribe({
         next: () => {
-          alert('Award deleted successfully');
+          this.toastService.success('Award deleted successfully');
           this.loadAwards();
         },
         error: (err: HttpErrorResponse) => {
           console.error('Award delete error:', err);
-          alert('Error: ' + this.getErrorMessage(err));
+          this.toastService.error('Error: ' + this.getErrorMessage(err));
         }
       });
   }

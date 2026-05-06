@@ -1,6 +1,7 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NotificationService, Notification } from '@core/services/notification.service';
+import { ToastService } from '@core/services/toast.service';
 
 @Component({
   selector: 'app-notifications',
@@ -14,7 +15,7 @@ export class NotificationsComponent implements OnInit {
   isLoading = false;
   errorMessage: string | null = null;
 
-  constructor(private notificationService: NotificationService, private cdr: ChangeDetectorRef) {}
+  constructor(private notificationService: NotificationService, private cdr: ChangeDetectorRef, private toastService: ToastService) {}
 
   ngOnInit(): void {
     this.loadNotifications();
@@ -70,7 +71,7 @@ export class NotificationsComponent implements OnInit {
           errorMessage = err.message;
         }
         
-        alert(errorMessage);
+        this.toastService.error(errorMessage);
       }
     });
   }
