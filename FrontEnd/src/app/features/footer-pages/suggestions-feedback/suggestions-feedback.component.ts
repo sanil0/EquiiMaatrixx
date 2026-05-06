@@ -123,6 +123,7 @@ export class SuggestionsFeedbackComponent {
         if (response.success) {
           this.submitted = true;
           this.successMessage = response.message;
+          window.scrollTo(0, 0);
           
           // Auto-hide success message and reset form after 5 seconds
           setTimeout(() => {
