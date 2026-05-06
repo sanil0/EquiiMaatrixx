@@ -134,6 +134,7 @@
       <label class="block text-sm font-medium mb-1">Grant Type</label>
       <select
         [(ngModel)]="editGrant.grantType"
+        (change)="onEditGrantTypeChange()"
         class="w-full rounded-lg border px-3 py-2 bg-white"
       >
         <option value="ESOP">ESOP</option>
@@ -236,6 +237,7 @@
       <label class="block text-sm font-medium mb-1">Grant Type</label>
       <select
         [(ngModel)]="createGrant.grantType"
+        (change)="onCreateGrantTypeChange()"
         class="w-full rounded-lg border px-3 py-2 bg-white"
       >
         <option value="ESOP">ESOP</option>

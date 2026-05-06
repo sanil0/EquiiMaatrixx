@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { ToastService } from '@core/services/toast.service';
 
 @Component({
   selector: 'app-exercise-request',
@@ -11,7 +12,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
   styleUrl: './exercise-request.component.css'
 })
 export class ExerciseRequestComponent implements OnInit {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private toastService: ToastService) {}
 
   searchText = '';
   isLoading = false;
@@ -130,12 +131,12 @@ export class ExerciseRequestComponent implements OnInit {
           // Update local state
           this.selectedRequest.status = status.toLowerCase();
           const actionText = this.popupAction === 'accept' ? 'Approved' : 'Rejected';
-          alert(`✓ Exercise request ${actionText}\n\nEmployee: ${employeeName}\nShares: ${shares}\nStatus: ${actionText}`);
+          this.toastService.success(`Exercise request ${actionText}\n\nEmployee: ${employeeName}\nShares: ${shares}\nStatus: ${actionText}`);
           this.closePopup();
           this.loadExerciseRequests(); // Refresh from backend
         },
         error: (err: HttpErrorResponse) => {
-          alert('❌ Error: ' + this.getErrorMessage(err));
+          this.toastService.error('Error: ' + this.getErrorMessage(err));
         }
       });
   }
