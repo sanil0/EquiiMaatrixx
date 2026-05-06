@@ -4,12 +4,14 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using System.IO;
 
 namespace BackEnd.Services
 {
     public class LoginService : ILoginService
     {
         private readonly IConfiguration _config;
+        private readonly string _logFilePath = "login-log.log";
 
         public LoginService(IConfiguration config)
         {
@@ -51,6 +53,39 @@ namespace BackEnd.Services
             );
 
             return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
+        public async Task LogLoginAttemptAsync(string email, int? employeeId, bool success, string message, string ipAddress)
+        {
+            try
+            {
+                var timestamp = DateTime.UtcNow.ToString("O");
+                var empIdString = employeeId.HasValue ? employeeId.ToString() : "N/A";
+                var logEntry = $"[{timestamp}] Email={email}, EmployeeId={empIdString}, Success={success}, Message={message}, IpAddress={ipAddress}";
+                
+                await File.AppendAllTextAsync(_logFilePath, logEntry + Environment.NewLine);
+            }
+            catch (Exception ex)
+            {
+                // Log to console if file logging fails
+                Console.WriteLine($"Error logging login attempt: {ex.Message}");
+            }
+        }
+
+        public async Task LogLogoutAsync(string email, int employeeId, string ipAddress)
+        {
+            try
+            {
+                var timestamp = DateTime.UtcNow.ToString("O");
+                var logEntry = $"[{timestamp}] Email={email}, EmployeeId={employeeId}, Success=True, Message=Logout successful, IpAddress={ipAddress}";
+                
+                await File.AppendAllTextAsync(_logFilePath, logEntry + Environment.NewLine);
+            }
+            catch (Exception ex)
+            {
+                // Log to console if file logging fails
+                Console.WriteLine($"Error logging logout: {ex.Message}");
+            }
         }
     }
 }

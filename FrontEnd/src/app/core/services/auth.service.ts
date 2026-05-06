@@ -78,13 +78,16 @@ export class AuthService {
   }
 
   logout() {
-    // Remove token immediately to prevent navigation issues
-    localStorage.removeItem('token');
-    
-    // Call backend logout in background (optional)
+    // Call backend logout FIRST while token is still in localStorage
     this.http.post(this.logoutUrl, {}).subscribe({
-      next: () => {},
-      error: () => {}
+      next: () => {
+        console.log('Backend logout successful');
+        localStorage.removeItem('token');
+      },
+      error: (error) => {
+        console.log('Backend logout error:', error);
+        localStorage.removeItem('token');
+      }
     });
   }
 }

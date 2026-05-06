@@ -31,20 +31,28 @@ namespace BackEnd.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginRequestDto request)
         {
+            var ipAddress = HttpContext.Connection.RemoteIpAddress?.ToString() ?? "Unknown";
             var employee = await _context.Employees
                 .FirstOrDefaultAsync(e => e.EmpEmail == request.Email);
 
             if (employee == null)
             {
+                // Log failed login attempt
+                await _loginService.LogLoginAttemptAsync(request.Email, null, false, "Invalid credentials", ipAddress);
                 return Unauthorized("Invalid credentials");
             }
 
             if (!_loginService.VerifyPassword(request.Password, employee.Password_Hash))
             {
+                // Log failed login attempt
+                await _loginService.LogLoginAttemptAsync(request.Email, null, false, "Invalid credentials", ipAddress);
                 return Unauthorized("Invalid credentials");
             }
 
             var token = _loginService.CreateJwtToken(employee);
+
+            // Log successful login
+            await _loginService.LogLoginAttemptAsync(request.Email, employee.EmpId, true, "Login successful", ipAddress);
 
             return Ok(new LoginResponseDto
             {
@@ -58,6 +66,36 @@ namespace BackEnd.Controllers
         [HttpPost("logout")]
         public async Task<IActionResult> Logout()
         {
+            var ipAddress = HttpContext.Connection.RemoteIpAddress?.ToString() ?? "Unknown";
+            
+            try
+            {
+                var emailClaim = User.FindFirst(System.Security.Claims.ClaimTypes.Email)?.Value;
+                var employeeIdClaim = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+                
+                // Try to parse employee ID
+                if (int.TryParse(employeeIdClaim, out int employeeId) && !string.IsNullOrEmpty(emailClaim))
+                {
+                    await _loginService.LogLogoutAsync(emailClaim, employeeId, ipAddress);
+                }
+                else if (!string.IsNullOrEmpty(emailClaim))
+                {
+                    // Fallback: Try to get employee from database using email
+                    var employee = await _context.Employees
+                        .FirstOrDefaultAsync(e => e.EmpEmail == emailClaim);
+                    
+                    if (employee != null)
+                    {
+                        await _loginService.LogLogoutAsync(emailClaim, employee.EmpId, ipAddress);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log the error but don't fail the logout request
+                Console.WriteLine($"Error logging logout: {ex.Message}");
+            }
+            
             return Ok("Logout successful");
         }
 
