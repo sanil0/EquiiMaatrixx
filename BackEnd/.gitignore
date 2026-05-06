@@ -35,6 +35,7 @@ artifacts/
 appsettings.Development.json
 market_price_cache.json
 market_price_log.json
+login-log.log
 
 # IDEs and editors
 .idea/
