@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { RouterModule, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../core/services/auth.service';
@@ -11,10 +11,16 @@ import { AuthService } from '../../core/services/auth.service';
   styleUrls: ['./admin-nav-bar.component.css']
 })
 export class AdminNavBarComponent {
+  @Output() menuItemClick = new EventEmitter<void>();
+
   constructor(private auth: AuthService, private router: Router) {}
 
   onLogout() {
     this.auth.logout();
     this.router.navigate(['/'], { replaceUrl: true });
+  }
+
+  onMenuItemClick() {
+    this.menuItemClick.emit();
   }
 }

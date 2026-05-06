@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { EmployeeService, EmployeeProfile } from '../../core/services/employee.service';
@@ -14,6 +14,8 @@ import { AuthService } from '../../core/services/auth.service';
   templateUrl: './employee-nav-bar.component.html'
 })
 export class EmployeeNavBarComponent implements OnInit {
+  @Output() menuItemClick = new EventEmitter<void>();
+
   employeeName = 'Loading...';
 
   constructor(
@@ -44,5 +46,9 @@ export class EmployeeNavBarComponent implements OnInit {
   onLogout() {
     this.auth.logout();
     this.router.navigate(['/'], { replaceUrl: true });
+  }
+
+  onMenuItemClick() {
+    this.menuItemClick.emit();
   }
 }

@@ -18,4 +18,14 @@ import { FooterComponent } from '../footer/footer.component';
   templateUrl: './emplayout.component.html',
   styleUrl: './emplayout.component.css'
 })
-export class EmplayoutComponent {}
+export class EmplayoutComponent {
+  isSidebarOpen = false;
+
+  toggleSidebar() {
+    this.isSidebarOpen = !this.isSidebarOpen;
+  }
+
+  closeSidebar() {
+    this.isSidebarOpen = false;
+  }
+}

@@ -3,7 +3,7 @@
   <!-- HEADER -->
   <div class="flex justify-between items-center mb-6">
     <div class="mb-4 -mt-6">
-      <h1 class="text-3xl font-bold mb-2 text-slate-800">
+      <h1 class="text-2xl sm:text-3xl font-bold mb-2 text-slate-800">
         Manage employee share exercise requests
       </h1>
     </div>
@@ -23,18 +23,18 @@
   </div>
 
   <!-- SEARCH -->
-  <div *ngIf="!isLoading" class="flex items-center gap-4 mb-8">
+  <div *ngIf="!isLoading" class="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-8">
     <input
       type="text"
       [(ngModel)]="searchText"
       placeholder="Search by Employee ID "
-      class="w-[400px] px-4 py-2 rounded-lg border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-green-400"
+      class="w-full sm:w-[400px] px-4 py-2 rounded-lg border border-slate-300 bg-white focus:outline-none focus:ring-2 focus:ring-green-400"
       (input)="onSearch()"
     />
 
     <button 
       (click)="onSearch()"
-      class="bg-blue-600 text-white px-8 py-3 rounded-full font-semibold hover:bg-blue-700 transition"
+      class="w-full sm:w-auto bg-blue-600 text-white px-8 py-3 rounded-full font-semibold hover:bg-blue-700 transition"
     >
       Search
     </button>
@@ -51,7 +51,8 @@
       No exercise requests found
     </div>
 
-    <table *ngIf="filteredRequests.length > 0" class="w-full border-collapse">
+    <div class="overflow-x-auto">
+      <table *ngIf="filteredRequests.length > 0" class="w-full border-collapse">
 
       <!-- HEAD -->
       <thead class="bg-gray-100 text-gray-700 border-b">
@@ -115,6 +116,7 @@
       </tbody>
 
     </table>
+    </div>
 
   </div>
 </div>
