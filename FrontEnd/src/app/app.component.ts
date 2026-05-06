@@ -1,7 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router, RouterOutlet } from '@angular/router';
+import { Router, RouterOutlet, NavigationEnd } from '@angular/router';
 import { AuthService } from './core/services/auth.service';
 import { ToastContainerComponent } from './shared/toast-container/toast-container.component';
+import { filter } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -17,15 +19,28 @@ export class AppComponent implements OnInit, OnDestroy {
   private readonly idleTimeout = 1 * 60 * 1000; // 1 minute for testing, change to 15 * 60 * 1000 later
   private readonly idleEvents = ['click', 'keydown', 'touchstart'];
   private sessionExpired = false;
+  private routerSubscription: Subscription | null = null;
 
   constructor(private auth: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     this.startIdleTracking();
+    this.setupScrollToTop();
   }
 
   ngOnDestroy(): void {
     this.stopIdleTracking();
+    if (this.routerSubscription) {
+      this.routerSubscription.unsubscribe();
+    }
+  }
+
+  private setupScrollToTop(): void {
+    this.routerSubscription = this.router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe(() => {
+        window.scrollTo(0, 0);
+      });
   }
 
   private startIdleTracking(): void {

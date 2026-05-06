@@ -93,6 +93,7 @@ export class ContactSupportComponent {
           this.submitting = false;
           if (response.success) {
             this.submitted = true;
+            window.scrollTo(0, 0);
             // Reset form after 5 seconds
             setTimeout(() => {
               this.resetForm();
