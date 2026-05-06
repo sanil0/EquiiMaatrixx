@@ -33,7 +33,10 @@
         'bg-[#D1FADF] text-[#22C55E]': rlaDashboard.isActive,
         'hover:bg-slate-100 text-slate-600': !rlaDashboard.isActive
       }" (click)="onMenuItemClick()">
-      <span class="font-medium">Dashboard</span>
+      <div class="flex items-center gap-3">
+        <span class="material-icons text-lg">dashboard</span>
+        <span class="font-medium">Dashboard</span>
+      </div>
     </a>
 
     <!-- EMPLOYEES -->
@@ -42,7 +45,10 @@
         'bg-[#D1FADF] text-[#22C55E]': rlaUsers.isActive,
         'hover:bg-slate-100 text-slate-600': !rlaUsers.isActive
       }" (click)="onMenuItemClick()">
-      <span class="font-medium">Employees</span>
+      <div class="flex items-center gap-3">
+        <span class="material-icons text-lg">people</span>
+        <span class="font-medium">Employees</span>
+      </div>
     </a>
 
     <!-- AWARDS -->
@@ -51,7 +57,10 @@
         'bg-[#D1FADF] text-[#22C55E]': rlaAwards.isActive,
         'hover:bg-slate-100 text-slate-600': !rlaAwards.isActive
       }" (click)="onMenuItemClick()">
-      <span class="font-medium">Awards</span>
+      <div class="flex items-center gap-3">
+        <span class="material-icons text-lg">card_giftcard</span>
+        <span class="font-medium">Awards</span>
+      </div>
     </a>
 
     <!-- EXERCISE -->
@@ -60,7 +69,10 @@
         'bg-[#D1FADF] text-[#22C55E]': rlaExercise.isActive,
         'hover:bg-slate-100 text-slate-600': !rlaExercise.isActive
       }" (click)="onMenuItemClick()">
-      <span class="font-medium">Exercise Requests</span>
+      <div class="flex items-center gap-3">
+        <span class="material-icons text-lg">assignment</span>
+        <span class="font-medium">Exercise Requests</span>
+      </div>
     </a>
 
     <!-- REPORTS -->
@@ -69,7 +81,10 @@
         'bg-[#D1FADF] text-[#22C55E]': rlaReports.isActive,
         'hover:bg-slate-100 text-slate-600': !rlaReports.isActive
       }" (click)="onMenuItemClick()">
-      <span class="font-medium">Reports</span>
+      <div class="flex items-center gap-3">
+        <span class="material-icons text-lg">assessment</span>
+        <span class="font-medium">Reports</span>
+      </div>
     </a>
 
     <!-- NOTIFICATIONS -->
@@ -78,7 +93,15 @@
         'bg-[#D1FADF] text-[#22C55E]': rlaNotif.isActive,
         'hover:bg-slate-100 text-slate-600': !rlaNotif.isActive
       }" (click)="onMenuItemClick()">
-      <span class="font-medium">Notifications</span>
+      <div class="flex items-center gap-3">
+        <div class="relative">
+          <span class="material-icons text-lg">notifications</span>
+          <span *ngIf="unreadNotificationCount > 0" class="absolute -top-2 -right-2 bg-amber-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+            {{ unreadNotificationCount }}
+          </span>
+        </div>
+        <span class="font-medium">Notifications</span>
+      </div>
     </a>
 
   </nav>
