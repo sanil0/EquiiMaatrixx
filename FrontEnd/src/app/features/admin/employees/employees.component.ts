@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { EmployeeService, EmployeeProfile } from '../../../core/services/employee.service';
+import { ToastService } from '../../../core/services/toast.service';
 
 interface EmployeeViewModel {
   empId: number;
@@ -36,7 +37,7 @@ export class EmployeeComponent implements OnInit {
     role: 'Employee'
   };
 
-  constructor(private employeeService: EmployeeService) {}
+  constructor(private employeeService: EmployeeService, private toastService: ToastService) {}
 
   ngOnInit(): void {
     this.loadEmployees();
@@ -68,7 +69,7 @@ export class EmployeeComponent implements OnInit {
         this.totalEmployees = this.employees.length;
       },
       error: () => {
-        alert('Failed to load employees');
+        this.toastService.error('Failed to load employees');
       }
     });
   }
@@ -132,7 +133,7 @@ export class EmployeeComponent implements OnInit {
     this.employeeService.createEmployee(createDto).subscribe({
       next: (response) => {
         this.isCreating = false;
-        alert('Employee created successfully!');
+        this.toastService.success('Employee created successfully!');
         this.closeCreateForm();
         this.loadEmployees();
       },

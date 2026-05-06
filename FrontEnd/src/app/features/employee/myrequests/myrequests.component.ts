@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { MarketPriceService } from '@core/services/market-price.service';
+import { ToastService } from '@core/services/toast.service';
 
 interface ExercisableShare {
   vestingId: number;
@@ -83,7 +84,7 @@ export class MyRequestsComponent implements OnInit {
   totalPayable = 0;
   marginalTaxRate = 0;
 
-  constructor(private http: HttpClient, private marketPriceService: MarketPriceService) {}
+  constructor(private http: HttpClient, private marketPriceService: MarketPriceService, private toastService: ToastService) {}
 
   ngOnInit() {
     this.loadExercisableShares();
@@ -227,14 +228,14 @@ export class MyRequestsComponent implements OnInit {
     this.http.post('https://localhost:7132/api/ExerciseRequest', request)
       .subscribe({
         next: (response: any) => {
-          alert('Exercise request submitted successfully!');
+          this.toastService.success('Exercise request submitted successfully!');
           this.closeExerciseForm();
           this.loadExerciseRequests();
           this.loadExercisableShares();
         },
         error: (err) => {
           console.error('Error submitting request', err);
-          alert('Error submitting request');
+          this.toastService.error('Error submitting request');
         }
       });
   }
