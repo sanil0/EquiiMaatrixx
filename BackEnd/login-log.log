@@ -48,3 +48,9 @@
 [2026-05-06T12:10:12.5403409Z] Email=rob@company.com, EmployeeId=2, Success=True, Message=Logout successful, IpAddress=::1
 [2026-05-06T12:11:12.9220012Z] Email=rob@company.com, EmployeeId=2, Success=True, Message=Login successful, IpAddress=::1
 [2026-05-06T12:12:23.5792519Z] Email=rob@company.com, EmployeeId=2, Success=True, Message=Logout successful, IpAddress=::1
+[2026-05-06T12:17:20.1870144Z] Email=rob@company.com, EmployeeId=2, Success=True, Message=Login successful, IpAddress=::1
+[2026-05-06T12:18:18.0255866Z] Email=rob@company.com, EmployeeId=2, Success=True, Message=Login successful, IpAddress=::1
+[2026-05-06T12:18:39.0204994Z] Email=rob@company.com, EmployeeId=2, Success=True, Message=Logout successful, IpAddress=::1
+[2026-05-06T12:19:38.5835847Z] Email=rob@company.com, EmployeeId=2, Success=True, Message=Logout successful, IpAddress=::1
+[2026-05-06T12:20:57.0445891Z] Email=rob@company.com, EmployeeId=2, Success=True, Message=Login successful, IpAddress=::1
+[2026-05-06T12:30:40.0206878Z] Email=rob@company.com, EmployeeId=2, Success=True, Message=Logout successful, IpAddress=::1
