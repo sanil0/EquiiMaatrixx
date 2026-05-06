@@ -22,11 +22,11 @@ export class TaxCalculatorComponent implements OnInit {
     taxType: 'exercise' as 'exercise' | 'selling',
     awardType: 'esop' as 'esop' | 'rsu',
     stockSymbol: 'SCHW',
-    holdingPeriodMonths: 0,
+    holdingPeriodMonths: null as number | null,
     marketPrice: null as number | null,
-    shares: 0,
-    exercisePrice: 0,
-    salePrice: 0
+    shares: null as number | null,
+    exercisePrice: null as number | null,
+    salePrice: null as number | null
   };
 
   result: TaxCalculatorResult | null = null;
@@ -47,7 +47,7 @@ export class TaxCalculatorComponent implements OnInit {
 
   onAwardTypeChange(): void {
     if (this.calculation.awardType === 'rsu') {
-      this.calculation.exercisePrice = 0;
+      this.calculation.exercisePrice = null;
     }
     this.resetCalculation();
   }
@@ -78,8 +78,18 @@ export class TaxCalculatorComponent implements OnInit {
 
   calculateTax(): void {
     this.errorMessage = '';
-    if (this.calculation.marketPrice == null || this.calculation.shares <= 0) {
+    if (this.calculation.marketPrice == null || this.calculation.shares == null || this.calculation.shares <= 0) {
       this.errorMessage = 'Please enter market price and number of shares.';
+      return;
+    }
+
+    if (this.calculation.taxType === 'exercise' && this.calculation.awardType !== 'rsu' && (this.calculation.exercisePrice == null || this.calculation.exercisePrice < 0)) {
+      this.errorMessage = 'Please enter a valid exercise price.';
+      return;
+    }
+
+    if (this.calculation.taxType === 'selling' && (this.calculation.salePrice == null || this.calculation.salePrice <= 0)) {
+      this.errorMessage = 'Please enter a valid sale price.';
       return;
     }
 
@@ -121,22 +131,27 @@ export class TaxCalculatorComponent implements OnInit {
     this.loading = false;
     this.errorMessage = '';
     this.marketPriceError = '';
+    this.calculation.shares = null;
+    this.calculation.exercisePrice = this.calculation.awardType === 'rsu' ? null : null;
+    this.calculation.salePrice = null;
+    this.calculation.marketPrice = null;
+    this.calculation.holdingPeriodMonths = null;
   }
 
   getPerquisiteValue(): number {
-    if (this.calculation.marketPrice == null) {
+    if (this.calculation.marketPrice == null || this.calculation.shares == null) {
       return 0;
     }
     const price = this.calculation.marketPrice;
-    const exercisePrice = this.calculation.awardType === 'rsu' ? 0 : this.calculation.exercisePrice;
-    return this.calculation.shares * Math.max(0, price - exercisePrice);
+    const exercisePrice = this.calculation.awardType === 'rsu' ? 0 : (this.calculation.exercisePrice ?? 0);
+    return (this.calculation.shares ?? 0) * Math.max(0, price - exercisePrice);
   }
 
   getCapitalGainAmount(): number {
-    if (this.calculation.marketPrice == null) {
+    if (this.calculation.marketPrice == null || this.calculation.shares == null) {
       return 0;
     }
-    return this.calculation.shares * Math.max(0, this.calculation.salePrice - this.calculation.marketPrice);
+    return (this.calculation.shares ?? 0) * Math.max(0, (this.calculation.salePrice ?? 0) - this.calculation.marketPrice);
   }
 
   getTotalTax(): number {
@@ -144,21 +159,26 @@ export class TaxCalculatorComponent implements OnInit {
   }
 
   getNetProceeds(): number {
+    const shares = this.calculation.shares ?? 0;
+    const marketPrice = this.calculation.marketPrice ?? 0;
+    const exercisePrice = this.calculation.awardType === 'rsu' ? 0 : (this.calculation.exercisePrice ?? 0);
+    const salePrice = this.calculation.salePrice ?? 0;
+
     if (this.calculation.taxType === 'exercise') {
       // For exercise: Net Proceeds = (Market Price - Strike Price) × Shares - Tax
-      const strikePrice = this.calculation.awardType === 'rsu' ? 0 : this.calculation.exercisePrice;
-      const gainPerShare = (this.calculation.marketPrice ?? 0) - strikePrice;
-      return gainPerShare * this.calculation.shares - this.getTotalTax();
+      const gainPerShare = marketPrice - exercisePrice;
+      return gainPerShare * shares - this.getTotalTax();
     }
+
     // For selling: Net Proceeds = Sale Price × Shares - Tax
-    return this.calculation.salePrice * this.calculation.shares - this.getTotalTax();
+    return salePrice * shares - this.getTotalTax();
   }
 
   getHoldingClassification(): string {
     if (this.calculation.taxType !== 'selling') {
       return '';
     }
-    return this.calculation.holdingPeriodMonths >= 12 ? 'Long-Term Capital Gain' : 'Short-Term Capital Gain';
+    return (this.calculation.holdingPeriodMonths ?? 0) >= 12 ? 'Long-Term Capital Gain' : 'Short-Term Capital Gain';
   }
 
   getTaxLabel(): string {
