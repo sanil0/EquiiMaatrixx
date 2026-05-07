@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { LegalNoticesComponent } from './legal-notices.component';
 
 describe('LegalNoticesComponent', () => {
@@ -7,7 +8,7 @@ describe('LegalNoticesComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LegalNoticesComponent]
+      imports: [HttpClientTestingModule, LegalNoticesComponent]
     })
     .compileComponents();
 

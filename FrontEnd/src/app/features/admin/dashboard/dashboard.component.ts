@@ -40,7 +40,7 @@ export class DashboardComponent implements OnInit {
     this.employeeService.getAdminDashboard().subscribe({
       next: (dashboard: AdminDashboard) => {
         this.stats = {
-          totalEmployees: dashboard.totalEmployees,
+          totalEmployees: dashboard.totalEmployees - 1,
           totalAwardsGranted: `${dashboard.totalAwardsGranted} Units`,
           totalVestedUnits: `${dashboard.totalVestedUnits} Units`,
           pendingRequests: dashboard.pendingRequests

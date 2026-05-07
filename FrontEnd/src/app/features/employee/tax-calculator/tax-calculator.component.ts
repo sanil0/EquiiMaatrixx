@@ -42,14 +42,24 @@ export class TaxCalculatorComponent implements OnInit {
   }
 
   onTaxTypeChange(): void {
-    this.resetCalculation();
+    const prevSymbol = this.calculation.stockSymbol;
+    this.resetCalculation(false);
+    if (prevSymbol && prevSymbol.trim()) {
+      this.calculation.stockSymbol = prevSymbol;
+      this.fetchMarketPrice();
+    }
   }
 
   onAwardTypeChange(): void {
+    const prevSymbol = this.calculation.stockSymbol;
     if (this.calculation.awardType === 'rsu') {
       this.calculation.exercisePrice = null;
     }
-    this.resetCalculation();
+    this.resetCalculation(false);
+    if (prevSymbol && prevSymbol.trim()) {
+      this.calculation.stockSymbol = prevSymbol;
+      this.fetchMarketPrice();
+    }
   }
 
   fetchMarketPrice(): void {
@@ -104,7 +114,26 @@ export class TaxCalculatorComponent implements OnInit {
       return;
     }
 
-    // Call backend API instead of calculating locally
+    // For selling tax, if holding period >= 12 months, apply flat 12.5% LTCG, else use slab
+    if (this.calculation.taxType === 'selling' && (this.calculation.holdingPeriodMonths ?? 0) >= 12) {
+      // Flat 12.5% tax
+      const tax = +(baseAmount * 0.125).toFixed(2);
+      this.result = {
+        totalTax: tax,
+        slabBreakdown: [
+          {
+            rate: 0.125,
+            taxableIncomeUsd: +baseAmount.toFixed(2),
+            taxAmountUsd: tax
+          }
+        ],
+        currencySymbol: '$'
+      };
+      this.loading = false;
+      return;
+    }
+
+    // Otherwise, use backend slab calculation
     this.taxService.calculateTax(baseAmount).subscribe({
       next: (taxResult: TaxCalculationResponse) => {
         this.result = {
@@ -126,7 +155,7 @@ export class TaxCalculatorComponent implements OnInit {
     });
   }
 
-  resetCalculation(): void {
+  resetCalculation(clearMarketPrice: boolean = true): void {
     this.result = null;
     this.loading = false;
     this.errorMessage = '';
@@ -134,7 +163,9 @@ export class TaxCalculatorComponent implements OnInit {
     this.calculation.shares = null;
     this.calculation.exercisePrice = this.calculation.awardType === 'rsu' ? null : null;
     this.calculation.salePrice = null;
-    this.calculation.marketPrice = null;
+    if (clearMarketPrice) {
+      this.calculation.marketPrice = null;
+    }
     this.calculation.holdingPeriodMonths = null;
   }
 

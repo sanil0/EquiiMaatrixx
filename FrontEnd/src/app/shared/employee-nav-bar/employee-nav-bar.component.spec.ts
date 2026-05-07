@@ -1,4 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { EmployeeNavBarComponent } from './employee-nav-bar.component';
 
@@ -8,7 +10,7 @@ describe('EmployeeNavBarComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [EmployeeNavBarComponent]
+      imports: [HttpClientTestingModule, RouterTestingModule, EmployeeNavBarComponent]
     })
     .compileComponents();
     
