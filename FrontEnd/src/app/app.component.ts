@@ -16,7 +16,7 @@ export class AppComponent implements OnInit, OnDestroy {
   title = 'FrontEnd';
 
   private idleTimerId: ReturnType<typeof setTimeout> | null = null;
-  private readonly idleTimeout = 1 * 60 * 1000; // 1 minute for testing, change to 15 * 60 * 1000 later
+  private readonly idleTimeout = 5 * 60 * 1000; // 5 minutes for testing, change to 15 * 60 * 1000 later
   private readonly idleEvents = ['click', 'keydown', 'touchstart'];
   private sessionExpired = false;
   private routerSubscription: Subscription | null = null;
@@ -55,10 +55,9 @@ export class AppComponent implements OnInit, OnDestroy {
       clearTimeout(this.idleTimerId);
       this.idleTimerId = null;
     }
-
-    this.idleEvents.forEach((eventName) =>
-      window.removeEventListener(eventName, this.activityHandler)
-    );
+    this.idleEvents.forEach((eventName) => {
+      window.removeEventListener(eventName, this.activityHandler);
+    });
   }
 
   private activityHandler = (): void => {
@@ -66,20 +65,20 @@ export class AppComponent implements OnInit, OnDestroy {
       this.navigateToLoginOnExpiration();
       return;
     }
-
-    this.resetIdleTimer();
+    // Always reset timer if authenticated
+    if (this.auth.isAuthenticated()) {
+      this.resetIdleTimer();
+    }
   };
 
   private resetIdleTimer(): void {
     if (this.idleTimerId !== null) {
       clearTimeout(this.idleTimerId);
     }
-
     if (!this.auth.isAuthenticated()) {
       this.idleTimerId = null;
       return;
     }
-
     this.idleTimerId = setTimeout(() => {
       this.handleSessionTimeout();
     }, this.idleTimeout);

@@ -1,18 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
-import { EnotificationsComponent } from './enotifications.component';
+import { EmployeeNotificationsComponent } from './enotifications.component';
 
-describe('EnotificationsComponent', () => {
-  let component: EnotificationsComponent;
-  let fixture: ComponentFixture<EnotificationsComponent>;
+describe('EmployeeNotificationsComponent', () => {
+  let component: EmployeeNotificationsComponent;
+  let fixture: ComponentFixture<EmployeeNotificationsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [EnotificationsComponent]
+      imports: [HttpClientTestingModule, EmployeeNotificationsComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(EnotificationsComponent);
+    fixture = TestBed.createComponent(EmployeeNotificationsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

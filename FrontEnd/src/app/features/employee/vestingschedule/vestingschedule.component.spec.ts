@@ -1,18 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
-import { VestingscheduleComponent } from './vestingschedule.component';
+import { VestingScheduleComponent } from './vestingschedule.component';
 
-describe('VestingscheduleComponent', () => {
-  let component: VestingscheduleComponent;
-  let fixture: ComponentFixture<VestingscheduleComponent>;
+describe('VestingScheduleComponent', () => {
+  let component: VestingScheduleComponent;
+  let fixture: ComponentFixture<VestingScheduleComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [VestingscheduleComponent]
+      imports: [HttpClientTestingModule, VestingScheduleComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(VestingscheduleComponent);
+    fixture = TestBed.createComponent(VestingScheduleComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

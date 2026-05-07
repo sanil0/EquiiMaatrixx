@@ -212,22 +212,22 @@ namespace BackEnd.Controllers
         [HttpDelete("{awardId}")]
         public async Task<IActionResult> DeleteAward(int awardId)
         {
-            var award = await _context.Awards.FindAsync(awardId);
+            var award = await _context.Awards.Include(a => a.VestingSchedules).FirstOrDefaultAsync(a => a.AwardId == awardId);
 
             if (award == null)
                 return NotFound("Award not found");
 
-            // Check if vesting schedules exist for this award
-            var vestingSchedulesExist = await _context.VestingSchedules
-                .AnyAsync(vs => vs.Awards_AwardId == awardId);
-
-            if (vestingSchedulesExist)
-                return BadRequest(new { message = "Cannot delete this award because it has vesting schedules. Please contact support to delete the vesting schedules first." });
+            // Delete vesting schedules first (if any)
+            var vestingSchedules = await _context.VestingSchedules.Where(vs => vs.Awards_AwardId == awardId).ToListAsync();
+            if (vestingSchedules.Any())
+            {
+                _context.VestingSchedules.RemoveRange(vestingSchedules);
+            }
 
             _context.Awards.Remove(award);
             await _context.SaveChangesAsync();
 
-            return Ok(new { message = "Award deleted successfully", awardId = awardId });
+            return Ok(new { message = "Award and related vesting schedules deleted successfully", awardId = awardId });
         }
     }
 }
