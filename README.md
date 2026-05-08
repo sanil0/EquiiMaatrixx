@@ -1,6 +1,6 @@
-**EquiMatrix – Equity Award Tracker
-**
-📌 Overview
+EquiMatrix – Equity Award Tracker
+
+Overview
 EquiMatrix is a modern, full-stack web application designed to simplify and automate the management of employee equity awards such as ESOPs and RSUs.
 It provides a centralized platform for:
 
@@ -10,10 +10,9 @@ Automated tax calculations
 Exercise request workflows
 Secure authentication & audit tracking
 
+Features
 
-🚀 Features
-
-👤 Employee Features
+Employee Features
 
 Secure login with JWT authentication
 Dashboard with equity overview
@@ -30,13 +29,13 @@ Audit logs and tracking
 Notification management
 Feedback and support handling
 
-⚙️ System Capabilities
+System Capabilities
 
-📈 Real-time stock price integration (Alpha Vantage API)
-💰 Automated tax calculation engine
-🔐 Secure authentication (JWT + BCrypt)
-🧾 Audit logging for compliance
-📧 Email notifications via Brevo API
+Real-time stock price integration (Alpha Vantage API)
+Automated tax calculation engine
+Secure authentication (JWT + BCrypt)
+Audit logging for compliance
+Email notifications via Brevo API
 
 
 🏗️ Tech Stack
@@ -61,7 +60,7 @@ External APIs
 Alpha Vantage (Market Prices)
 Brevo (Email Service)
 
-📂 Project Structure
+Project Structure
 
 EquiMatrix/
 
