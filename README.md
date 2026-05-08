@@ -1,5 +1,5 @@
-📊 EquiMatrix – Equity Award Tracker
-
+**EquiMatrix – Equity Award Tracker
+**
 📌 Overview
 EquiMatrix is a modern, full-stack web application designed to simplify and automate the management of employee equity awards such as ESOPs and RSUs.
 It provides a centralized platform for:
