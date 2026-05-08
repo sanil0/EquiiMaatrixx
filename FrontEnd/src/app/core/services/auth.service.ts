@@ -14,7 +14,6 @@ export interface LoginResponse {
   providedIn: 'root'
 })
 export class AuthService {
-
   private baseUrl = 'https://localhost:7132/api/auth/login';
   private logoutUrl = 'https://localhost:7132/api/auth/logout';
 
@@ -41,7 +40,6 @@ export class AuthService {
     if (!token) {
       return null;
     }
-    
     try {
       const decoded: any = jwtDecode(token);
       return decoded["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
@@ -55,7 +53,6 @@ export class AuthService {
     if (!token) {
       return null;
     }
-    
     try {
       const decoded: any = jwtDecode(token);
       return decoded["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"];
@@ -64,10 +61,23 @@ export class AuthService {
     }
   }
 
+  getUserEmail(): string | null {
+    const token = this.getToken();
+    if (!token) {
+      return null;
+    }
+    try {
+      const decoded: any = jwtDecode(token);
+      // Standard email claim
+      return decoded["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"] || decoded.email || null;
+    } catch {
+      return null;
+    }
+  }
+
   isAuthenticated(): boolean {
     const token = this.getToken();
     if (!token) return false;
-    
     try {
       const decoded: any = jwtDecode(token);
       const exp = decoded.exp;

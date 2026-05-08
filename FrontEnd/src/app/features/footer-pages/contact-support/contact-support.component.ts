@@ -63,7 +63,13 @@ export class ContactSupportComponent {
     private auth: AuthService,
     private router: Router,
     private contactService: ContactService
-  ) {}
+  ) {
+    // Auto-fill email if authenticated
+    const userEmail = this.auth.getUserEmail();
+    if (userEmail) {
+      this.form.email = userEmail;
+    }
+  }
 
   backToDashboard(): void {
     const role = this.auth.getUserRole();
@@ -114,7 +120,7 @@ export class ContactSupportComponent {
   resetForm(): void {
     this.form = {
       name: '',
-      email: '',
+      email: this.auth.getUserEmail() || '',
       subject: '',
       category: 'general',
       message: ''
@@ -124,6 +130,6 @@ export class ContactSupportComponent {
   }
 
   isFormValid(): boolean {
-    return !!(this.form.name && this.form.email && this.form.subject && this.form.message);
+    return !!(this.form.name && this.form.subject && this.form.message);
   }
 }

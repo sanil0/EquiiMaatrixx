@@ -93,7 +93,13 @@ export class SuggestionsFeedbackComponent {
     private auth: AuthService,
     private router: Router,
     private feedbackService: FeedbackService
-  ) {}
+  ) {
+    // Auto-fill email if authenticated
+    const userEmail = this.auth.getUserEmail();
+    if (userEmail) {
+      this.form.email = userEmail;
+    }
+  }
 
   backToDashboard(): void {
     const role = this.auth.getUserRole();
@@ -144,7 +150,7 @@ export class SuggestionsFeedbackComponent {
   resetForm(): void {
     this.form = {
       name: '',
-      email: '',
+      email: this.auth.getUserEmail() || '',
       type: 'suggestion',
       subject: '',
       message: '',
@@ -156,7 +162,7 @@ export class SuggestionsFeedbackComponent {
   }
 
   isFormValid(): boolean {
-    return !!(this.form.name && this.form.email && this.form.subject && this.form.message && this.form.rating);
+    return !!(this.form.name && this.form.subject && this.form.message && this.form.rating);
   }
 
   getStatusColor(status: string): string {

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NotificationService, Notification } from '@core/services/notification.service';
+import { NotificationCountService } from '@core/services/notification-count.service';
 
 @Component({
   selector: 'app-employee-notifications',
@@ -13,7 +14,10 @@ export class EmployeeNotificationsComponent implements OnInit {
   isLoading = false;
   errorMessage: string | null = null;
 
-  constructor(private notificationService: NotificationService) {}
+  constructor(
+    private notificationService: NotificationService,
+    private notificationCountService: NotificationCountService
+  ) {}
 
   ngOnInit(): void {
     this.loadNotifications();
@@ -42,6 +46,7 @@ export class EmployeeNotificationsComponent implements OnInit {
     this.notificationService.markAsRead(notification.notificationId).subscribe({
       next: () => {
         // Success - notification is already marked as read in UI
+        this.notificationCountService.triggerRefresh();
       },
       error: (err: any) => {
         console.error('Error marking notification as read:', err);

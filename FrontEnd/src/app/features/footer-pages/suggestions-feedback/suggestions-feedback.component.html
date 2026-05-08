@@ -18,7 +18,7 @@
   <!-- Main Content -->
   <div class="max-w-6xl mx-auto px-6 py-16">
     <!-- Benefits Section -->
-    <section class="mb-20">
+    <!-- <section class="mb-20">
       <p class="text-sm uppercase tracking-[0.3em] text-slate-500 mb-3">Our Benefits</p>
       <h2 class="text-4xl font-bold text-slate-900 mb-8">Why Share Your Feedback?</h2>
       <div class="grid md:grid-cols-3 gap-6">
@@ -28,7 +28,7 @@
           <p class="text-slate-600">{{ benefit.description }}</p>
         </div>
       </div>
-    </section>
+    </section> -->
 
     <div class="grid gap-12 lg:grid-cols-3">
       <!-- Feedback Form -->
@@ -48,6 +48,7 @@
           </div>
 
           <form *ngIf="!submitted" (ngSubmit)="onSubmit()" class="space-y-6">
+
             <!-- Name -->
             <div>
               <label class="block text-sm font-medium text-slate-900 mb-2">Full Name *</label>
@@ -59,16 +60,18 @@
                 class="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-slate-900 placeholder-slate-500 focus:border-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/10 transition">
             </div>
 
-            <!-- Email -->
+            <!-- Email (Read-only) -->
             <div>
-              <label class="block text-sm font-medium text-slate-900 mb-2">Email Address *</label>
+              <label class="block text-sm font-medium text-slate-900 mb-2">Email Address</label>
               <input
-                [(ngModel)]="form.email"
+                [value]="form.email"
                 name="email"
                 type="email"
-                placeholder="your.email@company.com"
-                class="w-full rounded-lg border border-slate-200 bg-white px-4 py-3 text-slate-900 placeholder-slate-500 focus:border-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/10 transition">
+                readonly
+                class="w-full rounded-lg border border-slate-200 bg-slate-100 px-4 py-3 text-slate-900 focus:outline-none cursor-not-allowed">
             </div>
+
+
 
             <!-- Type -->
             <div>
