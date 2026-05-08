@@ -1,9 +1,11 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { EmployeeService, EmployeeProfile } from '../../core/services/employee.service';
 import { AuthService } from '../../core/services/auth.service';
 import { NotificationService, Notification } from '../../core/services/notification.service';
+import { NotificationCountService } from '../../core/services/notification-count.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-employee-nav-bar',
@@ -14,22 +16,32 @@ import { NotificationService, Notification } from '../../core/services/notificat
   ],
   templateUrl: './employee-nav-bar.component.html'
 })
-export class EmployeeNavBarComponent implements OnInit {
+export class EmployeeNavBarComponent implements OnInit, OnDestroy {
   @Output() menuItemClick = new EventEmitter<void>();
 
   employeeName = 'Loading...';
   unreadNotificationCount = 0;
 
+  private notificationRefreshSub?: Subscription;
+
   constructor(
     private employeeService: EmployeeService,
     private auth: AuthService,
     private router: Router,
-    private notificationService: NotificationService
+    private notificationService: NotificationService,
+    private notificationCountService: NotificationCountService
   ) {}
 
   ngOnInit() {
     this.loadEmployeeProfile();
     this.loadUnreadNotifications();
+    this.notificationRefreshSub = this.notificationCountService.refresh$.subscribe(() => {
+      this.loadUnreadNotifications();
+    });
+  }
+
+  ngOnDestroy() {
+    this.notificationRefreshSub?.unsubscribe();
   }
 
   loadEmployeeProfile() {

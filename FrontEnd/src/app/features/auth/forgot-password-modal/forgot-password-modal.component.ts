@@ -87,7 +87,11 @@ export class ForgotPasswordModalComponent {
       error: (error) => {
         this.loading = false;
         console.error('Send OTP Error:', error);
-        this.error = error.error?.message || error.message || 'Failed to send OTP. Please try again.';
+        if (error.status === 404) {
+          this.error = 'Email not found or not registered.';
+        } else {
+          this.error = error.error?.message || error.message || 'Failed to send OTP. Please try again.';
+        }
       }
     });
   }

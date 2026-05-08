@@ -16,7 +16,7 @@ export class AppComponent implements OnInit, OnDestroy {
   title = 'FrontEnd';
 
   private idleTimerId: ReturnType<typeof setTimeout> | null = null;
-  private readonly idleTimeout = 5 * 60 * 1000; // 5 minutes for testing, change to 15 * 60 * 1000 later
+  private readonly idleTimeout = 1 * 60 * 1000; // 5 minutes for testing, change to 15 * 60 * 1000 later
   private readonly idleEvents = ['click', 'keydown', 'touchstart'];
   private sessionExpired = false;
   private routerSubscription: Subscription | null = null;
@@ -43,10 +43,11 @@ export class AppComponent implements OnInit, OnDestroy {
       });
   }
 
+
   private startIdleTracking(): void {
     this.resetIdleTimer();
     this.idleEvents.forEach((eventName) =>
-      window.addEventListener(eventName, this.activityHandler)
+      window.addEventListener(eventName, this.boundActivityHandler)
     );
   }
 
@@ -56,11 +57,15 @@ export class AppComponent implements OnInit, OnDestroy {
       this.idleTimerId = null;
     }
     this.idleEvents.forEach((eventName) => {
-      window.removeEventListener(eventName, this.activityHandler);
+      window.removeEventListener(eventName, this.boundActivityHandler);
     });
   }
 
-  private activityHandler = (): void => {
+
+  // Use a bound function to ensure correct 'this' context for event listeners
+  private boundActivityHandler = () => this.activityHandler();
+
+  private activityHandler(): void {
     if (this.sessionExpired) {
       this.navigateToLoginOnExpiration();
       return;
@@ -69,7 +74,7 @@ export class AppComponent implements OnInit, OnDestroy {
     if (this.auth.isAuthenticated()) {
       this.resetIdleTimer();
     }
-  };
+  }
 
   private resetIdleTimer(): void {
     if (this.idleTimerId !== null) {

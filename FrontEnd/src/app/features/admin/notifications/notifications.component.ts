@@ -2,6 +2,8 @@ import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NotificationService, Notification } from '@core/services/notification.service';
 import { ToastService } from '@core/services/toast.service';
+import { NotificationCountService } from '@core/services/notification-count.service';
+
 
 @Component({
   selector: 'app-notifications',
@@ -15,7 +17,12 @@ export class NotificationsComponent implements OnInit {
   isLoading = false;
   errorMessage: string | null = null;
 
-  constructor(private notificationService: NotificationService, private cdr: ChangeDetectorRef, private toastService: ToastService) {}
+  constructor(
+    private notificationService: NotificationService,
+    private cdr: ChangeDetectorRef,
+    private toastService: ToastService,
+    private notificationCountService: NotificationCountService
+  ) {}
 
   ngOnInit(): void {
     this.loadNotifications();
@@ -55,6 +62,7 @@ export class NotificationsComponent implements OnInit {
     this.notificationService.markAsRead(notificationId).subscribe({
       next: () => {
         // Success - notification is already marked as read in UI
+        this.notificationCountService.triggerRefresh();
         console.log(`Notification ${notificationId} marked as read successfully`);
       },
       error: (err: any) => {
