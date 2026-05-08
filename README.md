@@ -38,7 +38,7 @@ Audit logging for compliance
 Email notifications via Brevo API
 
 
-🏗️ Tech Stack
+Tech Stack
 
 Backend
 
